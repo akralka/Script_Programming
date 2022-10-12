@@ -1,27 +1,33 @@
+import cmath
+from fractions import Fraction
+from string import ascii_letters
+
 
 def sum(arg1, arg2):
-    return arg1 + arg2
-def fun():
-    print(2+2)
-    print(2 + 2.0)
-    # print(2 + '2')
-    print('2' + '2')
-    zmienna1 = 2
-    print(type(zmienna1))
-    zmienna2 = '2'
-    print(type(zmienna2))
+    
+    if isinstance(arg1,int) and  isinstance(arg2,int) :
+        return int(arg1) + int(arg2)
 
-    print('__name__ = {}'.format(__name__))
+    elif isinstance(arg1,float) or isinstance(arg2,float) :
+        return float(arg1) + float(arg2)
+
+    elif isinstance(arg1,complex) and isinstance(arg2,complex) :
+        return complex(arg1) + complex(arg2)
+
+    elif isinstance(arg1,str) or isinstance(arg2,str) :
+          
+
+    elif isinstance(arg1,Fraction) or isinstance(arg2,Fraction) :
+        return Fraction(arg1)  +  Fraction(arg2)
+        
+    else:
+        return float(arg1) + float(arg2)
+
+
+
+# print('__name__ = {}'.format(__name__))
 
 if __name__ == '__main__':
-
-    arg1 = int(input())
-    arg2 = int(input())
-    res = sum(arg1, arg2)
+    res = sum(1, 2)
     print("suma:", res)
-    fun()
-
-
-
-
 
