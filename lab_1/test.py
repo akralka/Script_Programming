@@ -26,6 +26,8 @@ class Test_TestSum(unittest.TestCase):
         with self.assertRaises(ValueError):
             main.sum(2, 'Ala ma kota123') 
 
+#  tu wyrzuca błąd a nie powinno >> ala.. >> na 0 powinno
+
     def test_sum_not_int_not_string(self):
         with self.assertRaises(TypeError):
             main.sum(1, [2,3])
@@ -33,3 +35,5 @@ class Test_TestSum(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+# main.sum >> bo importuje funkcje sumy z poprzedniego pliku
