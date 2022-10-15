@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import math
 import os
 import random
@@ -71,6 +72,9 @@ def quartiles(arr):
 
 
 if __name__ == '__main__':
+=======
+
+>>>>>>> a27f0ea52263afa4b7985ad4cd2bd94e3e15ab6c
     
 
     n = int(input().strip())

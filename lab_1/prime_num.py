@@ -1,21 +1,22 @@
 import math
 import sys
 
-def prime(arr):
-    for i in range(len(arr)):
-        if arr[i] == 0 or arr[i] == 1:
-            continue
-        elif arr[i] == 2:
-            print(arr[i])
-            continue
-        for j in range(2, math.ceil(arr[i]/2)+1):
-            if arr[i] % j == 0:
-                break
-            else:
-                print(arr[i])
-                break
+def prime(num): 
+
+    if num == 0 or num == 1:
+        return False
+
+    for j in range(2, math.ceil(num/2)+1):
+        if num % j == 0:
+            return False
+    
+    return True
+
 
 if __name__ == '__main__': 
-    a = sys.argv[1:] # string, 1: zeby nie brać nazwy pliku z konsoli [0]
-    a = [int(i) for i in a if i.isdigit()] # digit 
-    prime(a)
+    nums = sys.argv[1:] # string, 1: zeby nie brać nazwy pliku z konsoli [0]
+    nums = [int(i) for i in nums if i.isdigit()] # digit    
+
+    for num in nums:
+        if prime(num) == True:
+            print(num)

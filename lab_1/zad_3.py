@@ -7,9 +7,12 @@ def print_3(n):
         print("Tab[" + str(i) + "] =" , arr[i])
 
 def print_4(arr):
-    hash = {f'Klucz{i}': j for i, j in zip(range(len(arr)), arr)} # zip ; zwieksza range.. i arr jednoczesnie 
+    hash = {f'Klucz{i}': j for i, j in zip(range(len(arr)), arr)}
+     # zip ; zwieksza range.. i arr jednoczesnie 
+     # for i, j in zip(range(len(arr))(czyli i ), arr(czyli j))
     for i in range(len(hash)):
         print(f"Hash[Klucz{i}] = {hash[f'Klucz{i}']}")
+
 
 if __name__ == '__main__':
     N = int(input())

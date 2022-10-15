@@ -14,16 +14,13 @@ def sum(arg1, arg2):
     elif isinstance(arg1,complex) and isinstance(arg2,complex) :
         return complex(arg1) + complex(arg2)
 
-    elif isinstance(arg1,str) or isinstance(arg2,str) :
-          
-
     elif isinstance(arg1,Fraction) or isinstance(arg2,Fraction) :
         return Fraction(arg1)  +  Fraction(arg2)
         
     else:
         return float(arg1) + float(arg2)
 
-
+# isinstance() czy argumnet to integer/complex/cokolwiek
 
 # print('__name__ = {}'.format(__name__))
 
@@ -31,3 +28,4 @@ if __name__ == '__main__':
     res = sum(1, 2)
     print("suma:", res)
 
+# jesli importuje (posrednio) to name to nazwa tego importowanego pliku
