@@ -1,10 +1,9 @@
 
 
-def digit():
-    for i in range(10):
+def digit(n):
+        
         dig = []
         non_dig = []
-        n = input()   
         for i in n:
             if i.isdigit():
                 i = int(i)
@@ -27,5 +26,8 @@ def digit():
 
 
 if __name__=='__main__':
-    digit()
+    for i in range(10):
+        n = input()    
+        digit(n)
+
 
