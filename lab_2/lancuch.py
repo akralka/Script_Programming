@@ -12,7 +12,7 @@ def fun(lancuch):
     print(lancuch[2:])
     print(lancuch[-2])
     print(lancuch[-3:])
-    print(lancuch[1::2]) # tylko tu spacja to znak??
+    print(lancuch[1::2]) 
 
 
 if __name__ == '__main__':
