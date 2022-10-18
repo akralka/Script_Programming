@@ -1,6 +1,7 @@
 import cmath
 from fractions import Fraction
 from string import ascii_letters
+import string
 
 
 def sum(arg1, arg2):
@@ -17,6 +18,9 @@ def sum(arg1, arg2):
     elif isinstance(arg1,Fraction) or isinstance(arg2,Fraction) :
         return Fraction(arg1)  +  Fraction(arg2)
         
+    # elif isinstance(arg1,int) or isascii(arg2, string) and not isdigit(arg2, string) :
+    #     return int(arg1)  +  0  
+
     else:
         return float(arg1) + float(arg2)
 

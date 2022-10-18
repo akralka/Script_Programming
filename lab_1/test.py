@@ -23,12 +23,14 @@ class Test_TestSum(unittest.TestCase):
         self.assertEqual(main.sum(Fraction(10, 18), Fraction(2, 18)), Fraction(12, 18))
 
     def test_sum_integer_wrong_number_in_string(self):
+        # self.assertEqual(main.sum(2, 'Ala ma kota123'), 2)
         with self.assertRaises(ValueError):
             main.sum(2, 'Ala ma kota123') 
 
 #  tu wyrzuca błąd a nie powinno >> ala.. >> na 0 powinno
 
     def test_sum_not_int_not_string(self):
+        # self.assertEqual(main.sum(2, [1,2]), 2)
         with self.assertRaises(TypeError):
             main.sum(1, [2,3])
 
