@@ -30,8 +30,6 @@ myli. ''')
     lancuch = '''Python nie pozwala
 na łączenie dwóch różnych
 typów obiektów'''
-    # lancuch = '''14363634634634634'''
-    # lancuch = [1,2,3] ???
 
     fun(lancuch)
     
