@@ -19,11 +19,11 @@ if __name__ == '__main__':
 
     res = var('''Programowanie jest 
 świetne, każdy tak 
-uważa ''', 
+uważa. ''', 
     '''Jeśli ktoś 
 twierdzi inaczej 
 to się
-myli ''')
+myli. ''')
 
     print(res)
 
@@ -31,7 +31,9 @@ myli ''')
 na łączenie dwóch różnych
 typów obiektów'''
     # lancuch = '''14363634634634634'''
+    # lancuch = [1,2,3] ???
 
     fun(lancuch)
     
     # print('słowo'.encode("utf-8"))
+    # napisy w Pythonie są niemodyfikowalne 
