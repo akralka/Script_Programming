@@ -3,8 +3,6 @@ import unittest
 from fractions import Fraction
 
 
-
-
 class Test_TestStringCheck(unittest.TestCase):
     def test_string_int(self):
         self.assertEqual(regular.digit('3ff4'), ('34', 'ff')) 
