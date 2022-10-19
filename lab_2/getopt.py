@@ -4,7 +4,7 @@ import sys
 import getopt
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "m:")
+    opts, args = getopt.getopt(sys.argv[1:], "m:", ["moduł="])
     # opts = [('-m', 'slownik')] albo [('-m', 'lista')] >> opts[0][1]
     modul = opts[0][1]
 
