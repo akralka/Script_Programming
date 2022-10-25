@@ -23,7 +23,7 @@ def sale(product, quantity, name):
         return "Ilość mniejsza lub równa 0\n"
         
     for letter in name.lower():
-        if letter not in 'abcdefghijklmnoprstuvxyzq':
+        if letter not in 'abcdefghijklmnoprstuvwxyzq':
             return "Niepoprawne nazwisko\n"
 
     magazine[product] -= quantity
@@ -51,7 +51,7 @@ def refund(product, quantity, name):
 
 
     for letter in name.lower():
-        if letter not in 'abcdefghijklmnoprstuvxyzq':
+        if letter not in 'abcdefghijklmnoprstuwvxyzq':
             return "Niepoprawne nazwisko\n"
 
     magazine[product] += quantity
@@ -77,7 +77,6 @@ if __name__=='__main__':
         with open("logs.txt", "r") as file:
             print(file.read()) 
             print(magazine)
-
 
 
 
