@@ -17,17 +17,18 @@ def conversion(file, char):
         tmp = f"{char}$"
 
     file = open(file, 'r').read()
-    lines = file.split('\n')
+    lines = file.split('\n')  #tu lista bedzie
+
     for line in lines:
         if re.search(tmp, line):
-            string += line[:-1]     
+            string += line[:-1]    # bo zostaje \ wiec usuwamy 
             new_file.write(string)      
         else:
-            string +=line 
-            new_file.write(string+'\n')
-        string = ""
+            string +=line   # tu nie ma \ wiec cały
+            new_file.write(string+'\n') # i nowa linijka
+        string = ""     
 
-    new_file.close()
+    new_file.close()  # zeby sie zapisało
     return open_file("file_tmp.txt")
 
 if __name__ == "__main__":

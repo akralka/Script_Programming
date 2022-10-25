@@ -78,6 +78,7 @@ if __name__=='__main__':
             print(file.read()) 
             print(magazine)
 
-
+# python ./skrypt_zajecia.py
+# sale T-shirt 1 Nowak
 
 
