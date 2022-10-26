@@ -50,7 +50,7 @@ class Klasa(object):
 
 print("Załadowano zawartość pliku '{name}'".format(name=__file__))
 
-# obiekt = Klasa([4,5,6], 10,20) 
+obiekt = Klasa([4,5,6], 10,20) 
 # print(obiekt.tab)   #publiczne
 # print(obiekt._zmienna1)     #chronione 
-# print(obiekt._Klasa__zmienna_2)   #prywatne
+print(obiekt._Klasa__zmienna_2)   #prywatne
