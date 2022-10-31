@@ -60,10 +60,12 @@ class Term():
 
 # if __name__ =='__main__':
 
-#     term1 = Term(Day.MON, 9, 10)
-#     term2 = Term(Day.FRI, 10, 15)
+#     term1 = Term(Day.TUE, 9, 45)
+#     term2 = Term(Day.WED, 6, 15)
 #     print(term1)
 #     print(term2)
-#     print(term1.equals(term2))
-#     print(term1.laterThan(term2))
 #     print(term1.earlierThan(term2)) 
+#     print(term1.laterThan(term2))
+#     print(term1.equals(term2))
+    
+    
