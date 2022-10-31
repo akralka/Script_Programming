@@ -3,8 +3,8 @@ Iliada: 6
 Odyseja: 17
 Treny: 5
 Dziady: 22
-"Nad Niemnem": 13
+Nad_Niemnem: 13
 Makbet: 14
-"Ludzie bezdomni": 23
-"Sklepy cynamonowe": 34
-"Harry Potter": 55
+Ludzie_bezdomni: 23
+Sklepy_cynamonowe: 34
+Harry_Potter: 55

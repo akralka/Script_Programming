@@ -1,19 +1,23 @@
-import argparse
+# import argparse
 
 class Library:
     def __init__(self):
-        self.books= {"brysiu": 5, "Random kic": 7, "bardzo_pomocny_marcel:(((": 0.75}
+        self.books= {}
         self.transactions = {} 
 
     # def __str__(self):
     #     return self.transactions
 
-    # def parseFileLine():
-    #     file = open("book.txt", 'r').read()
-    #     lines = file.split('\n')
-    #     for line in lines:
-    #         L.books = {line[0]: line[1]} 
-    #     return L.books
+    def parseFileLine(self, file):
+        d = {} 
+        with open(file, "r") as zawartosc:
+            for line in zawartosc:
+                if line:
+                    key, value = map(str.strip, line.split(':'))
+                    d[key] = int(value)
+
+        self.books = d
+        return self.books
 
     def parseInputLine():
         pass
@@ -79,6 +83,8 @@ class Library:
                 return "You didn't borrow that book"
             else:
                 if self.transactions[name][book] < quantity:
+                    if self.transactions[name][book] ==0:
+                        return "You've already return all of the copies"
                     return "You borrow less copies of that book"
 
         self.books[book] += quantity  
@@ -92,7 +98,7 @@ class Library:
             self.transactions.update({name: {book: quantity}})
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     
     # parser = argparse.ArgumentParser()
     # parser.add_argument("-f", "--file", help="Give input!", required=True, nargs="+")
@@ -108,18 +114,18 @@ if __name__ == '__main__':
     #     conversion(file, args.c[0])
     
 
-    L = Library()
+    # L = Library()
 
-    while True:
-        try:
-            operation = input().split()
-            # transaction[0] to ma byc nazwa pliku
-            if operation[0] == 'borrow':
-                L.borrow(operation[1], operation[2], operation[3])
+    # while True:
+    #     try:
+    #         operation = input().split()
+    #         # transaction[0] to ma byc nazwa pliku
+    #         if operation[0] == 'borrow':
+    #             L.borrow(operation[1], operation[2], operation[3])
 
-            if operation[0] == 'book_return':
-                L.book_return(operation[1], operation[2], operation[3])
+    #         if operation[0] == 'book_return':
+    #             L.book_return(operation[1], operation[2], operation[3])
 
-        except(EOFError):
-            pass
+    #     except(EOFError):
+    #         pass
 
