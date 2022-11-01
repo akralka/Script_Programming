@@ -1,17 +1,17 @@
-# import argparse
+import sys
 
 class Library:
-    def __init__(self):
-        self.books= {}
+    def __init__(self, file):
+        self.books = self.parseFileLine(file)
         self.transactions = {} 
 
-    # def __str__(self):
-    #     return self.transactions
+    def __str__(self):
+        return f"{self.transactions}\n{self.books}"
 
     def parseFileLine(self, file):
         d = {} 
-        with open(file, "r") as zawartosc:
-            for line in zawartosc:
+        with open(file, "r") as lines:
+            for line in lines:
                 if line:
                     key, value = map(str.strip, line.split(':'))
                     d[key] = int(value)
@@ -98,34 +98,20 @@ class Library:
             self.transactions.update({name: {book: quantity}})
 
 
-# if __name__ == '__main__':
-    
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument("-f", "--file", help="Give input!", required=True, nargs="+")
 
-    # try:
-    #     args = parser.parse_args()
-        
-    # except:
-    #     print("Specify file names")      
-    #     exit()
+if __name__=='__main__':
 
-    # for file in args.file:
-    #     conversion(file, args.c[0])
-    
+    L = Library(sys.argv[1])
 
-    # L = Library()
+    while True:
+        try:
+            operation = input().split()
+            if operation[0] == 'borrow':
+                L.borrow(operation[1], operation[2], operation[3])
 
-    # while True:
-    #     try:
-    #         operation = input().split()
-    #         # transaction[0] to ma byc nazwa pliku
-    #         if operation[0] == 'borrow':
-    #             L.borrow(operation[1], operation[2], operation[3])
+            if operation[0] == 'book_return':
+                L.book_return(operation[1], operation[2], operation[3])
 
-    #         if operation[0] == 'book_return':
-    #             L.book_return(operation[1], operation[2], operation[3])
-
-    #     except(EOFError):
-    #         pass
+        except(EOFError):
+            print(L)
 
