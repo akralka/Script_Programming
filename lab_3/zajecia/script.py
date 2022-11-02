@@ -19,8 +19,16 @@ class Library:
         self.books = d
         return self.books
 
-    def parseInputLine():
-        pass
+    def parseInputLine(self):
+
+        operation = input().split()
+
+        if operation[0] == 'borrow':
+            print(self.borrow(operation[1], int(operation[2]), operation[3]))
+
+        if operation[0] == 'book_return':
+            print(self.book_return(operation[1], int(operation[2]), operation[3]))
+
     
     def borrow(self, book, quantity, name):
         
@@ -54,6 +62,8 @@ class Library:
         else:
             self.transactions.update({name: {book: quantity}})
 
+        return 'Borrowed'
+
 
     def book_return(self, book, quantity, name):
 
@@ -73,8 +83,6 @@ class Library:
         
         if quantity <= 0:
             return "Quantity equal or less than 0"
-
-        
 
         if name not in self.transactions.keys():
             return "You didn't borrow anything"     
@@ -97,21 +105,21 @@ class Library:
         else:
             self.transactions.update({name: {book: quantity}})
 
+        return 'Returned'
+
 
 
 if __name__=='__main__':
 
     L = Library(sys.argv[1])
 
-    while True:
-        try:
-            operation = input().split()
-            if operation[0] == 'borrow':
-                L.borrow(operation[1], operation[2], operation[3])
+    try:
+        while True:
+            L.parseInputLine()
+            
+    except(EOFError):
+        print(L)
 
-            if operation[0] == 'book_return':
-                L.book_return(operation[1], operation[2], operation[3])
-
-        except(EOFError):
-            print(L)
-
+# python ./script.py "book.txt"
+# borrow Faust 2 Andy
+# book_return Faust 1 Andy
