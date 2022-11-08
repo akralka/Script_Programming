@@ -37,7 +37,7 @@ class Term():
 
 
     def equals(self, termin):
-        if self.hour == termin.hour and self.minute == termin.minute:
+        if self.__day == termin.__day and self.hour == termin.hour and self.minute == termin.minute:
             return True
         return False
 
