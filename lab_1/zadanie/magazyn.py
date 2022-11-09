@@ -28,7 +28,7 @@ def sale(product, quantity, name):
 
     magazine[product] -= quantity
 
-    return f'{name} kupil {quantity} {product}\n'
+    return f'{name} bought {quantity} {product}\n'
 
 
 
@@ -56,7 +56,7 @@ def refund(product, quantity, name):
 
     magazine[product] += quantity
 
-    return f'{name} zwrocil {quantity} {product}\n'
+    return f'{name} refund {quantity} {product}\n'
             
 
 if __name__=='__main__':
@@ -78,7 +78,12 @@ if __name__=='__main__':
             print(file.read()) 
             print(magazine)
 
-# python ./skrypt_zajecia.py
+# python ./magazyn.py
 # sale T-shirt 1 Nowak
-
+# sale Dress 58 Kowalski
+# sale Socks 3  Kowal
+# sale Socks 35  Nowak
+# refund Socks 7  Nowak
+# refund Jumper  7  Kowalewski
+# refund AA 7 Kowalewski
 

@@ -7,7 +7,7 @@ def open_file(file):
 
 def conversion(file, char):
 
-    new_file =  open('file_tmp.txt',"w")
+    new_file =  open('output.txt',"w")
 
     string = ""
 
@@ -29,7 +29,7 @@ def conversion(file, char):
         string = ""     
 
     new_file.close()  # zeby sie zapisało
-    return open_file("file_tmp.txt")
+    return open_file("output.txt")
 
 if __name__ == "__main__":
 
@@ -49,5 +49,5 @@ if __name__ == "__main__":
         conversion(file, args.c[0])
 
 
-# python .\script.py -f file.py    
+# python .\przetwarzanie_tekstu.py -f input.py  
 
