@@ -8,29 +8,7 @@ class Lesson():
         self.year = year
         self.term = term
         self.fullTime = fullTime
-
-    def __str__(self):
-            if self.fullTime:
-                self.fullTime = "stacjonarnych"
-            if not self.fullTime:
-                self.fullTime = "niestacjonarne"
-            return f"{self.name} ({Term.method(self.term._Term__day.value)} {self.term.hour}:{self.term.minute}-{(self.term.hour + (self.term.duration // 60) + ((self.term.minute +(self.term.duration % 60)) // 60))}:{(self.term.minute +   self.term.duration) % 60})\
-            \n{self.year} rok studiów {self.fullTime}\
-            \nProwadzący: {self.teacherName}"
-
-
-
-from term import Term
-from day import Day
-
-class Lesson():
-    def __init__(self, term, name:str, teacherName:str, year:int, fullTime=True):
-        self.name = name
-        self.teacherName = teacherName
-        self.year = year
-        self.term = term
-        self.fullTime = fullTime
-
+    
     def __str__(self):
             if self.fullTime:
                 self.fullTime = "stacjonarnych"
@@ -142,6 +120,3 @@ class Lesson():
                     self.change_time_later()
                     return True
             return False
-
-
- 

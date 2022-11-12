@@ -30,6 +30,7 @@ class Day(Enum):
                 if diff == i.value:
                     return i
 
+
     def change(self, n):
         for day in Day:
             shift = ((day.value) + n) % 7
@@ -37,6 +38,9 @@ class Day(Enum):
                 shift = 7
             if day.value == shift:
                 return day
+
+    
+
 
 
 # print(nthDayFrom(1, Day.SAT)) 
