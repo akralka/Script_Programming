@@ -1,10 +1,9 @@
 from typing import List
-from lesson import Lesson
 from term import Term
-from day import Day
-import re
+from lesson import Lesson
 from enum import Enum
-from math import floor
+
+
 
 class Action(Enum):
     DAY_EARLIER = 0
@@ -13,112 +12,136 @@ class Action(Enum):
     TIME_LATER = 3
 
 
-class TimetableWithoutBreaks():
+class TimetableWithoutBreaks:
     def __init__(self):
-        self.__list = []
+        self.lessons = []
+    """ Class containing a set of operations to manage the timetable """
 
+##########################################################
     def can_be_transferred_to(self, term: Term, fullTime: bool) -> bool:
-        return (not self.busy(term)) and Lesson.isTermValid(term, fullTime)
+        """
+Informs whether a lesson can be transferred to the given term
+
+Parameters
+----------
+term : Term
+    The term checked for the transferability
+fullTime : bool
+    Full-time or part-time studies
+
+Returns
+-------
+bool
+    **True** if the lesson can be transferred to this term
+"""
 
 
-    def get(self, term: Term) -> Lesson:
-        for lesson in self.__list:
-            if lesson.term == term:
-                return lesson
-        return None
-
+        if fullTime:
+            if term.day.value in [6, 7]:
+                return False
+            elif term.day.value == 5:
+                if self.term. _beginning >= 8 * 60 and self.term._ending <= 17 * 60:
+                    return True
+            elif term.day.value in [1, 2, 3, 4]:
+                if self.term._ending <= 20 * 60 and self.term._beginning >= 8 * 60:
+                    return True
+        else:
+            if term.day.value in [1, 2, 3, 4]:
+                return False
+            elif term.day.value == 5:
+                if self.term._beginning >= 17 * 60 and self.term._ending <= 20 * 60:
+                    return True
+            elif term.day.value in [6, 7]:
+                if self.term._ending <= 20 * 60 and self.term._beginning >= 8 * 60:
+                    return True
 
     def busy(self, term: Term) -> bool:
-        return self.get(term) != None
+        """
+Informs whether the given term is busy.  Should not be confused with ``can_be_transfered_to()``
+since there might be free term where the lesson cannot be transferred.
+
+Parameters
+----------
+term : Term
+    Checked term
+
+Returns
+-------
+bool
+    **True** if the term is busy
+        """
+        if not term in self.lessons:
+            return False
+        return True
+
+ ##########################################################
 
     def put(self, lesson: Lesson) -> bool:
-        if(self.can_be_transferred_to(lesson.term, lesson.fullTime)):
-            self.__list.append(lesson)
-            return True
-        return False
+        """
+Add the given lesson to the timetable.
 
-    def remove(self, term: Term):
-        for i,lesson in enumerate(self.__list):
-            if(lesson.term == term):
-                self.__list.pop(i)
-                return True
-        return False
+Parameters
+----------
+lesson : Lesson
+    The added  lesson
 
-    def replace(self, lesson: Lesson):
-        self.remove(lesson.term)
-        return self.put(lesson)
+Returns
+-------
+bool
+    **True**  if the lesson was added.  The lesson cannot be placed if the timetable slot is already occupied.
+        """
+
+        pass
+
+##########################################################
 
     def parse(self, actions: List[str]) -> List[Action]:
-        reg = re.compile(r'^d\+$|^t\+$|^d-$|^t-$')
-        i = 0
-        while i < len(actions):
-            if reg.match(actions[i]):
-                i += 1
-            else:
-                actions.pop(i)
-        translate = {"d+":Action.DAY_LATER, 
-            "d-":Action.DAY_EARLIER, 
-            "t-":Action.TIME_EARLIER, 
-            "t+":Action.TIME_LATER}
-        result = []
-        for each in actions:
-            result.append(translate[each])
-        return result                
+        """
+Converts an array of strings to an array of 'Action' objects.
 
-    @staticmethod
-    def align(string):
-        if(len(string) > 20):
-            return string[:20]
-        else:
-            i = (20-len(string))/2
-            if(i % 1):
-                i = floor(i)
-                return " "*i + string + " "*(i+1)
-            else:
-                i = int(i)
-                return " "*i + string + " "*i
+Parameters
+----------
+actions:  List[str]
+    A list containing the strings: "d-", "d+", "t-" or "t+"
 
+Returns
+-------
+    List[Action]
+        A list containing the values:  DAY_EARLIER, DAY_LATER, TIME_EARLIER or TIME_LATER
+        """
+
+        pass
+
+##########################################################
 
     def perform(self, actions: List[Action]):
-        for i in range(len(actions)):
-            if(actions[i] == Action.DAY_EARLIER):
-                self.__list[i%len(self.__list)].earlierDay()
-            elif(actions[i] == Action.DAY_LATER):
-                self.__list[i%len(self.__list)].laterDay()
-            elif(actions[i] == Action.TIME_LATER):
-                self.__list[i%len(self.__list)].laterTime()
-            elif(actions[i] == Action.TIME_EARLIER):
-                self.__list[i%len(self.__list)].earlierTime()
+        """
+Transfer the lessons included in the timetable as described in the list of actions. N-th action should be sent the n-th lesson in the timetable.
 
-    def fromInt(cls, minutes:int):
-        return Term(Day(floor(minutes/1440)), floor(minutes/60) - floor(minutes/1440)*24, minutes % 60)
-        
-    def rebuildFromMinutes(self, minutes:int):
-        self.hour = floor(minutes/60) - floor(minutes/1440)*24
-        self.minute = minutes % 60
-        self.__day = Day(floor(minutes/1440))
-        return self
+Parameters
+----------
+actions : List[Action]
+    Actions to be performed
+        """
 
-    def __str__(self):
-        out = " "*20
-        for i in range(0,7):
-            out += "*" + TimetableWithoutBreaks.align(Day(i).readable())
-        out += "\n" + "*"*(8*20+7) + "\n"
-        start = TimetableWithoutBreaks.fromInt(480)
-        end = TimetableWithoutBreaks.fromInt(570)
-        for i in range(0,8):
-            time = str(start)[:-5] + "-" + str(end)[:-5]
-            out += TimetableWithoutBreaks.align(time)
-            for j in range(0,7):
-                lesson = self.get(TimetableWithoutBreaks.fromInt(int(start)+1440*j))
-                if(lesson == None):
-                    out += "*" + " "*20 
-                else:
-                    out += "*" + TimetableWithoutBreaks.align(lesson.name)
-            start.rebuildFromMinutes(int(start)+90)
-            end.rebuildFromMinutes(int(end)+90)
-            out += "\n" + "*"*(8*20+7) + "\n"
-        return out
+        pass
+##########################################################
 
+    def get(self, term: Term) -> Lesson:
+        """
+Get object (lesson) indicated by the given term.
+
+Parameters
+----------
+term: Term
+    Lesson date
+
+Returns
+-------
+lesson: Lesson
+    The lesson object or None if the term is free
+        """
+
+        pass
 
 

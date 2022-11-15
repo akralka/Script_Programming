@@ -120,6 +120,6 @@ if __name__=='__main__':
     except(EOFError):
         print(L)
 
-# python ./script.py "book.txt"
+# python ./biblioteka.py "book.txt"
 # borrow Faust 2 Andy
 # book_return Faust 1 Andy
