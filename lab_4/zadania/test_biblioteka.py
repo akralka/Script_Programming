@@ -1,45 +1,36 @@
 import biblioteka
 import unittest
+from biblioteka import Library, Book, Reader
 
 
 class Test_TestBorrow(unittest.TestCase):
-    def test_borrow_too_much(self):
-        self.assertEqual(biblioteka.Library("book.txt").borrow('Faust', 1000, 'Nowak'), 'Too much')
 
-    def test_borrow_wrong_item(self):
-        self.assertEqual(biblioteka.Library("book.txt").borrow('cos', 1, 'Nowak'), 'Wrong book')
+    def test_add(self):
+        self.assertEqual(biblioteka.Reader("Adam", "Nowak", 123).__add__( Book(1, "Goethe", "Faust")), None)
 
-    def test_borrow_wrong_name(self):
-        self.assertEqual(biblioteka.Library("book.txt").borrow('Faust', 1, 'Nowak12['), 'Wrong name')
+    def test_add__(self):
+        self.assertEqual(biblioteka.Reader("Adam", "Nowak", 111).__add__( Book(1, "Goethe", "Fa")), "can't borrow :there is no a book of that title or author")
 
-    def test_borrow_lack_of__name(self):
-        self.assertEqual(biblioteka.Library("book.txt").borrow('Faust', 1, ''), 'No name')
+    def test_sub(self):
+        self.assertEqual(biblioteka.Reader("Adam", "Nowak", 1).__sub__( Book(1, "ethe", "Faust")),  "can't return :there is no a book of that title or author")
 
-    def test_borrow_wrong_quantity(self):
-        self.assertEqual(biblioteka.Library("book.txt").borrow('Faust', '[aa]', 'Nowak'), 'Wrong quantity')
+    def test_sub__(self):
+        self.assertEqual(biblioteka.Reader("Adam", "Nowak", 1).__sub__( Book(1, "Nie", "Działa")),  "can't return :there is no a book of that title or author")
 
-    def test_borrow_quantity_less_than_0(self):
-        self.assertEqual(biblioteka.Library("book.txt").borrow('Faust', -3, 'Nowak'), 'Quantity equal or less than 0')
+    def test_sub_not(self):
+        self.assertEqual(biblioteka.Reader("Adam", "Nowak", 1).__sub__( Book(1, "Goethe", "Faust")),  None)
 
+    def test_name_add(self):
+        self.assertEqual(biblioteka.Reader("1mniam", "Nowak", 1).__add__( Book(1, "Goethe", "Faust")),  "Wrong name")
+    
+    def test_surname_add(self):
+        self.assertEqual(biblioteka.Reader("mniam", "{5i", 1).__add__( Book(1, "Goethe", "Faust")),  "Wrong surname")
 
-class Test_TestReturn(unittest.TestCase):
+    def test_name_sub(self):
+        self.assertEqual(biblioteka.Reader("1mniam", "Nowak", 1).__sub__( Book(1, "Goethe", "Faust")),  "Wrong name")
 
-    def test_book_return_wrong_item(self):
-        self.assertEqual(biblioteka.Library("book.txt").book_return('cos', 1, 'Nowak'), 'Wrong book')
-
-    def test_book_return_wrong_name(self):
-        self.assertEqual(biblioteka.Library("book.txt").book_return('Faust', 1, 'Nowak12['), 'Wrong name')
-
-    def test_book_returnlack_of__name(self):
-        self.assertEqual(biblioteka.Library("book.txt").book_return('Faust', 1, ''), 'No name')
-
-    def test_book_return_wrong_quantity(self):
-        self.assertEqual(biblioteka.Library("book.txt").book_return('Faust', '[aa]', 'Nowak'), 'Wrong quantity')
-
-    def test_book_return_quantity_less_than_0(self):
-        self.assertEqual(biblioteka.Library("book.txt").book_return('Faust', -3, 'Nowak'), 'Quantity equal or less than 0')
-
-
+    def test_name_sub(self):
+        self.assertEqual(biblioteka.Reader("mniam", "Nowa123", 1).__sub__( Book(1, "Goethe", "Faust")),  "Wrong surname")
 
 if __name__ == '__main__':
     unittest.main()

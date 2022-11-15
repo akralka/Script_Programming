@@ -42,6 +42,18 @@ class Reader():
         return f"Fullname: {self.name} {self.surname}"
 
     def __add__(self, book: Book):
+        for letter in self.name.lower():
+            if letter not in 'aąbcćdeęfghijklłmnńoóprsśtuvwxyzźżq':
+                return "Wrong name"
+        for letter in self.surname.lower():
+            if letter not in 'aąbcćdeęfghijklłmnńoóprsśtuvwxyzźżq':
+                return "Wrong surname"
+        empty = True
+        for i in Library.books:
+            if book.title == i.title and book.author == i.author:
+                empty = False
+        if empty:
+            return "can't borrow :there is no a book of that title or author"   
         if not book.borrow_date:
             book.reader_pesel = self.pesel
             book.borrow_date = parse()
@@ -55,7 +67,19 @@ class Reader():
             Library.transactions.append(f"{self.name} {self.surname} you can't borrow {book.title}!")
 
     def __sub__(self, book: Book):
-        if  book.borrow_date is not None and book.reader_pesel == self.pesel:
+        for letter in self.name.lower():
+            if letter not in 'aąbcćdeęfghijklłmnńoóprsśtuvwxyzźżq':
+                return "Wrong name"
+        for letter in self.surname.lower():
+            if letter not in 'aąbcćdeęfghijklłmnńoóprsśtuvwxyzźżq':
+                return "Wrong surname"
+        empty = True
+        for i in Library.books:
+            if book.title == i.title and book.author == i.author:
+                empty = False
+        if empty:
+            return "can't return :there is no a book of that title or author"   
+        if  book.borrow_date and book.reader_pesel == self.pesel:
             book.reader_pesel = None
             book.borrow_date = None
             book.return_date = parse()
@@ -79,7 +103,7 @@ class Library:
     def parseLine():
         book_list = []
         with open("C:\\Users\\ASUS\\Desktop\\semestr3\\Programowanie_skryptowe\\Scrypts\\lab_4\\zadania\\book.txt", "r") as lines:
-            id = 0
+            id = 1
             for line in lines:
                 book = line.strip('\n').split(':')
                 quantity = int(book[-1])
@@ -98,8 +122,8 @@ class Library:
         reader = Reader(line[0], line[1], line[2])
         operation = line[3]
         for book in cls.books:
-            if line[4] == book.title and line[5] == book.author and not book.reader_pesel:
-                if operation == '+':
+            if line[4] == book.title and line[5] == book.author :
+                if operation == '+' and not book.reader_pesel:
                     reader + book
                     break
                 elif operation == '-':
@@ -117,3 +141,4 @@ if __name__=='__main__':
         print(Library())
 
 # Adam Kasielski 123 + Harry_Potter Rowling
+# Bartuś Fober 223 + Iliada Homer
