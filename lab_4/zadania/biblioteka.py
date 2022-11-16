@@ -91,10 +91,13 @@ class Reader():
 class Library:
 
     def __str__(self):
+        print('Books:')
         for book in self.books:
             print(book)
+        print('\nReaders:')
         for reader in self.readers_list:
             print(reader)
+        print('\nTransactions:')
         for transaction in self.transactions:
             print(transaction)
         return ''
