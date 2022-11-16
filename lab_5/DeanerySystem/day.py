@@ -53,4 +53,3 @@ class Day(Enum):
 # print(Day.MON.difference(Day.SUN))
 # print(Day.SUN.difference(Day.MON))
 # print(Day.SUN.difference(Day.SAT))
-

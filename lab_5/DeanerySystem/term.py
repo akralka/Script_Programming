@@ -191,4 +191,3 @@ class Term():
 #     print("term2 == term3:", term2 == term3) # Ma się wypisać False
 #     term4 = term3 - term1                    
 #     print(term4)                                      
-
