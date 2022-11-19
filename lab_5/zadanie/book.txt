@@ -1,0 +1,10 @@
+Goethe:Faust:1
+Homer:Iliada:6
+Homer:Odyseja:1
+Kochanowski:Treny:5
+Mickiewicz:Dziady:2
+Orzeszkowa:Nad_Niemnem:11
+Szekspir:Makbet:1
+Zeromski:Ludzie_bezdomni:2
+Schulz:Sklepy_cynamonowe:3
+Rowling:Harry_Potter:5
