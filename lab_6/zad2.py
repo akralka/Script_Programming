@@ -8,3 +8,6 @@ res = dict(Counter((map(lambda i:len(i), (re.findall(f"\\w+", sys.stdin.read()))
 print(res)
 
 # \\w 0-9 a-Z
+
+
+
