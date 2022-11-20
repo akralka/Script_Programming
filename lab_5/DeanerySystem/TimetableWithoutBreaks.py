@@ -144,3 +144,14 @@ lesson: Lesson
 
         pass
 
+        # breaks = [Break(9, 30, 5), Break(11, 5, 10), Break(12, 45, 5), Break(14, 20, 20), Break(16, 10, 5), Break(17, 45, 5), Break(19, 20, 5)]
+        # timetable = TimetableWithBreaks(breaks)
+        # lessons = [Lesson(timetable, Term(8,0), "Kryptografia", "test", 1), 
+        # Lesson(timetable, Term(8,0,90,Day.TUE), "Sieci", "test", 1), 
+        # Lesson(timetable, Term(9,35,90,Day.FRI), "Fizyka Laby", "test", 1)]
+        # for i in lessons:
+        #     timetable.put(i)
+        #     i.attach(Observer())
+        #     timetable.put(lessons[1])
+        #     timetable.put(lessons[0])
+        #     print(timetable)

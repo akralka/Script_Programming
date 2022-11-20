@@ -1,17 +1,15 @@
 from inspect import signature
 
 def argumenty(*args, **kwargs):
-
-        def inner(funkcja):
-            # args = ([4,5],) len(args) = 1
-            array =[]
-            array += args[0] #[4, 5] [4, 5, 6]
-            finalArgs = []
-            finalArgs += args #[[4,5]]
+        # args = ([4,5],) len(args) = 1
+        def res(funkcja):
+            array = []
+            array += args[0]  #[4, 5] [4, 5, 6]
             parLen = len(signature(funkcja).parameters) - 1 # 3 bo sum(1,2,3), 2 bo roznica (1,2)
-
             def operacja(self, *args, **kwargs):
                 remaining = 0
+                finalArgs = []
+                finalArgs += args  #[[4,5]]
                 if([len(args) < parLen]):
                     remaining = parLen - len(args)
                 if remaining > 0:
@@ -27,7 +25,7 @@ def argumenty(*args, **kwargs):
                     out = array[-1]
                 return (string, out)
             return operacja
-        return inner 
+        return res 
 
 
 class Operacje:
@@ -39,7 +37,6 @@ class Operacje:
             self.argumentySuma = value
         elif(key == "roznica"):
             self.argumentyRoznica = value
-
     @argumenty(argumentySuma)
     def suma(self,a,b,c):
         return( "%d+%d+%d=%d" % (a,b,c,a+b+c))
@@ -65,11 +62,12 @@ class Operacje:
 # op.roznica(2,1) #Wypisze: 2-1=1
 # op.roznica(2) #Wypisze: 2-4=-2
 # wynik=op.roznica() #Wypisze: 4-5=-1
-# print(wynik) #Wypisze: 
+# print wynik #Wypisze: 6
 
+# #Zmiana zawartości listy argumentów dekoratora  dla metody 'suma'
 # op['suma']=[1,2]
-# oznacza, że   argumentySuma=[1,2]
+# #oznacza, że   argumentySuma=[1,2]
 
 # #Zmiana zawartości listy argumentów dekoratora  dla metody 'roznica'
 # op['roznica']=[1,2,3]
-# oznacza, że   argumentyRoznica=[1,2,3]
+# #oznacza, że   argumentyRoznica=[1,2,3]
