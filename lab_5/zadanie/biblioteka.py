@@ -1,4 +1,11 @@
 import time
+from abc import ABC
+
+class Book(ABC):
+    def __init__(self, book_id, author, title):
+        self.book_id = book_id
+        self.author = author
+        self.title = title
 
 class Date:
     def __init__(self, day, month, year, hour, minute, second):
@@ -19,11 +26,9 @@ def parse():
     return date
 
 
-class Book():
+class BorrowedBook(Book):
     def __init__(self, book_id, author, title, reader_pesel = None):
-            self.book_id = book_id
-            self.author = author
-            self.title = title
+            super().__init__(book_id, author, title)
             self.borrow_date = None
             self.return_date = None
             self.reader_pesel = reader_pesel
@@ -31,8 +36,21 @@ class Book():
     def __str__(self):
         return f"Book ID: {self.book_id:3d}, Author: {self.author:13}, Title: {self.title}"
 
+class BoughtBook(Book):
+    def __init__(self, book_id, author, title, price, reader_pesel = None):
+            super().__init__(book_id, author, title)
+            self.sell_date = None
+            self.reader_pesel = reader_pesel
+            self.price = price
+
+    def __str__(self):
+        return f"Book ID: {self.book_id:3d}, Author: {self.author:13}, Title: {self.title}"
+
 
 class Reader():
+    price_total_from_sell = 0
+    quantity_of_sold_books = 1
+
     def __init__(self, name, surname, pesel):
         self.name = name
         self.surname = surname
@@ -41,7 +59,7 @@ class Reader():
     def __str__(self):
         return f"Fullname: {self.name} {self.surname}"
 
-    def __add__(self, book: Book):
+    def __add__(self, book: BorrowedBook):
         for letter in self.name.lower():
             if letter not in 'aąbcćdeęfghijklłmnńoóprsśtuvwxyzźżq':
                 return "Wrong name"
@@ -49,7 +67,7 @@ class Reader():
             if letter not in 'aąbcćdeęfghijklłmnńoóprsśtuvwxyzźżq':
                 return "Wrong surname"
         empty = True
-        for i in Library.books:
+        for i in Library.books_borrow:
             if book.title == i.title and book.author == i.author:
                 empty = False
         if empty:
@@ -58,15 +76,15 @@ class Reader():
             book.reader_pesel = self.pesel
             book.borrow_date = parse()
             book.return_date = None
-            Library.transactions.append(f"{self.name:10} {self.surname:12} borrowed  {book.title:18} {book.author:10}  id number: {book.book_id:2}  at  {book.borrow_date}") 
+            Library.transactions_borrow.append(f"{self.name:10} {self.surname:12} borrowed  {book.title:8} {book.author:10}  id number: {book.book_id:2}  at  {book.borrow_date}") 
             for reader in Library.readers_list:
                 if reader.name == self.name and reader.surname == self.surname and reader.pesel == self.pesel:
                     return None
             Library.readers_list.append(self)   
         else:
-            Library.transactions.append(f"{self.name} {self.surname} you can't borrow {book.title}!")
+            Library.transactions_borrow.append(f"{self.name} {self.surname} you can't borrow {book.title}!")
 
-    def __sub__(self, book: Book):
+    def __sub__(self, book: BorrowedBook):
         for letter in self.name.lower():
             if letter not in 'aąbcćdeęfghijklłmnńoóprsśtuvwxyzźżq':
                 return "Wrong name"
@@ -74,7 +92,7 @@ class Reader():
             if letter not in 'aąbcćdeęfghijklłmnńoóprsśtuvwxyzźżq':
                 return "Wrong surname"
         empty = True
-        for i in Library.books:
+        for i in Library.books_borrow:
             if book.title == i.title and book.author == i.author:
                 empty = False
         if empty:
@@ -83,53 +101,96 @@ class Reader():
             book.reader_pesel = None
             book.borrow_date = None
             book.return_date = parse()
-            Library.transactions.append(f"{self.name:10} {self.surname:12} returned  {book.title:18} {book.author:10}  id number: {book.book_id:2}  at  {book.return_date}") 
+            Library.transactions_borrow.append(f"{self.name:10} {self.surname:12} returned  {book.title:8} {book.author:10}  id number: {book.book_id:2}  at  {book.return_date}") 
         else:
-            Library.transactions.append(f"{self.name} {self.surname} you can't return {book.title}!")
+            Library.transactions_borrow.append(f"{self.name} {self.surname} you can't return {book.title}!")
+
+    def __eq__(self, book: BoughtBook): #==
+        for letter in self.name.lower():
+            if letter not in 'aąbcćdeęfghijklłmnńoóprsśtuvwxyzźżq':
+                return "Wrong name"
+        for letter in self.surname.lower():
+            if letter not in 'aąbcćdeęfghijklłmnńoóprsśtuvwxyzźżq':
+                return "Wrong surname"  
+        empty = True
+        for i in Library.books_buy:
+            if book.title == i.title and book.author == i.author:
+                empty = False
+        if empty:
+            return "can't buy: there is no a book of that title or author for sell"   
+        Reader.price_total_from_sell += int(book.price)
+        if not book.sell_date:
+            book.reader_pesel = self.pesel
+            book.sell_date = parse()
+            q = (f"{book.title} {book.author} Sold amount: {Reader.quantity_of_sold_books}")  #.split()
+            # print(q)
+            Library.transactions_bought.append(q) 
+
+            # if len(Library.transactions_bought) == 0:
+            #     q = ' '.join(map(str,q))
+                # Library.transactions_bought.append(q) 
+            # else:
+            #     for list in Library.transactions_bought:
+            #         if list[0] == book.title:
+            #             Reader.quantity_of_sold_books += 1
+            #             print(Reader.quantity_of_sold_books)
+            #         else:
+            #             # q = ' '.join(map(str,q))
+            #             Library.transactions_bought.append(q) 
 
 
 class Library:
 
     def __str__(self):
-        print('Books:')
-        for book in self.books:
-            print(book)
-        print('\nReaders:')
-        for reader in self.readers_list:
-            print(reader)
-        print('\nTransactions:')
-        for transaction in self.transactions:
+        print('\nTransactions_borrowed:')
+        for transaction in self.transactions_borrow:
             print(transaction)
+        print('\nTransactions_bought:')
+        for transaction in self.transactions_bought:
+            print(transaction)
+        print("\nIncome from sold books: ", Reader.price_total_from_sell)
         return ''
 
     @staticmethod
     def parseLine():
-        book_list = []
-        with open("C:\\Users\\ASUS\\Desktop\\semestr3\\Programowanie_skryptowe\\Scrypts\\lab_4\\zadania\\book.txt", "r") as lines:
+        book_borrow_list = []
+        book_bought_book = []
+        with open("C:\\Users\\ASUS\\Desktop\\semestr3\\Programowanie_skryptowe\\Scrypts\\lab_5\\zadanie\\book.txt", "r") as lines:
             id = 1
             for line in lines:
-                book = line.strip('\n').split(':')
-                quantity = int(book[-1])
+                book = line.rstrip().split(':')
+                quantity = int(book[2])
                 for _ in range(quantity):
-                    book_list.append(Book(id, book[0], book[1], None))
+                    if not book[3]:
+                        book_borrow_list.append(BorrowedBook(id, book[0], book[1]))
+                    else:
+                        book_bought_book.append(BoughtBook(id, book[0], book[1], book[3]))
                     id += 1       
-        return book_list
+        return book_borrow_list, book_bought_book
 
-    books = parseLine()
+    books_borrow, books_buy = parseLine()
     readers_list = []
-    transactions = []
+    transactions_borrow = []
+    transactions_bought = []
 
     @classmethod
     def parseInput(cls):
         line = input().split()
         reader = Reader(line[0], line[1], line[2])
         operation = line[3]
-        for book in cls.books:
-            if line[4] == book.title and line[5] == book.author :
-                if operation == '+' and not book.reader_pesel:
+        if operation == '+':
+            for book in cls.books_borrow:
+                if line[4] == book.title and line[5] == book.author and not book.reader_pesel:
                     reader + book
                     break
-                elif operation == '-':
+        elif operation == '==':
+            for book in cls.books_buy:
+                if line[4] == book.title and line[5] == book.author and not book.reader_pesel:
+                    reader == book
+                    break
+        elif operation == '-':
+            for book in cls.books_borrow:
+                if line[4] == book.title and line[5] == book.author:
                     reader - book
                     break
 
@@ -143,5 +204,6 @@ if __name__=='__main__':
     except(EOFError):
         print(Library())
 
-# Adam Kasielski 123 + Harry_Potter Rowling
+# Adam Kasielski 123 == Harry_Potter Rowling
+# Adam Kasielski 123 == Ludzie_bezdomni Zeromski
 # Bartuś Fober 223 + Iliada Homer
