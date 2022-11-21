@@ -1,42 +1,37 @@
 from inspect import signature
 
-def argumenty(*args, **kwargs):
-        # args = ([4,5],) len(args) = 1
+def argumenty(*args, **kwargs):    # args = ([4,5],) len(args) = 1
+
         def res(funkcja):
             array = []
-            array += args[0]  #[4, 5] [4, 5, 6]
-            parLen = len(signature(funkcja).parameters) - 1 # 3 bo sum(1,2,3), 2 bo roznica (1,2)
+            array += args[0]     #[4, 5] [4, 5, 6]
+            fun_len = len(signature(funkcja).parameters) - 1           # 3 bo sum(1,2,3), 2 bo roznica (1,2)
             def operacja(self, *args, **kwargs):
-                remaining = 0
-                finalArgs = []
-                finalArgs += args  #[[4,5]]
-                if([len(args) < parLen]):
-                    remaining = parLen - len(args)
-                if remaining > 0:
-                    finalArgs += array[:remaining]
-                string = funkcja(self, *finalArgs)
-                if type(string) == tuple:
-                    if(len(string) > 1):
-                        return string[1]
-                out = 0
-                if len(array) > remaining:
-                    out = array[remaining]
-                else:
-                    out = array[-1]
-                return (string, out)
+                arguments = []
+                arguments += args  #[[4,5]]
+                if([len(args) < fun_len]):
+                    val = fun_len - len(args)
+                if val > 0:
+                    # print(arguments)           # dla op.suma(1,2) [1,2]     dla op.suma(1)   [1]
+                    # print(val)                 # 1                                            2
+                    # print(array[:val])         # [4]                                         [4,5]
+                    arguments += array[:val]
+                    # print(arguments)           # dla op.suma(1,2) [1,2,4]                    [1,4,5]
+                return funkcja(self, *arguments)
             return operacja
         return res 
 
-
 class Operacje:
+
     argumentySuma=[4,5]
     argumentyRoznica=[4,5,6]  
 
-    def __setitem__(self, key, value):
-        if(key == "suma"):
-            self.argumentySuma = value
-        elif(key == "roznica"):
-            self.argumentyRoznica = value
+    def __setitem__(self, value, operation):
+        if(value == "suma"):
+            self.argumentySuma = operation
+        elif(value == "roznica"):
+            self.argumentyRoznica = operation
+
     @argumenty(argumentySuma)
     def suma(self,a,b,c):
         return( "%d+%d+%d=%d" % (a,b,c,a+b+c))
@@ -45,14 +40,7 @@ class Operacje:
     def roznica(self,x,y):
         return("%d-%d=%d" % (x,y,x-y))
 
-# def gfg(x, y):
-# 	pass
 
-# t = signature(gfg)
-
-# print(t)
-
-# print(t.parameters['x'])
 
 # op=Operacje()
 # op.suma(1,2,3) #Wypisze: 1+2+3=6
@@ -62,12 +50,10 @@ class Operacje:
 # op.roznica(2,1) #Wypisze: 2-1=1
 # op.roznica(2) #Wypisze: 2-4=-2
 # wynik=op.roznica() #Wypisze: 4-5=-1
-# print wynik #Wypisze: 6
+# print( wynik) #Wypisze: 6
 
-# #Zmiana zawartości listy argumentów dekoratora  dla metody 'suma'
 # op['suma']=[1,2]
-# #oznacza, że   argumentySuma=[1,2]
+# op.argumentySuma
 
-# #Zmiana zawartości listy argumentów dekoratora  dla metody 'roznica'
 # op['roznica']=[1,2,3]
-# #oznacza, że   argumentyRoznica=[1,2,3]
+# op.argumentyRoznica
