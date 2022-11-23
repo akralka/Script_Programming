@@ -37,10 +37,10 @@ class BorrowedBook(Book):
         return f"Book ID: {self.book_id:3d}, Author: {self.author:13}, Title: {self.title}"
 
 class BoughtBook(Book):
-    def __init__(self, book_id, author, title, price, reader_pesel = None):
+    def __init__(self, book_id, author, title, price, sold_quantity = 0):
             super().__init__(book_id, author, title)
             self.sell_date = None
-            self.reader_pesel = reader_pesel
+            self.sold_quantity = sold_quantity
             self.price = price
 
     def __str__(self):
@@ -49,7 +49,6 @@ class BoughtBook(Book):
 
 class Reader():
     price_total_from_sell = 0
-    quantity_of_sold_books = 1
 
     def __init__(self, name, surname, pesel):
         self.name = name
@@ -119,25 +118,20 @@ class Reader():
         if empty:
             return "can't buy: there is no a book of that title or author for sell"   
         Reader.price_total_from_sell += int(book.price)
-        if not book.sell_date:
-            book.reader_pesel = self.pesel
+        if not book.sell_date or i.book_id != book.book_id:
             book.sell_date = parse()
-            q = (f"{book.title} {book.author} Sold amount: {Reader.quantity_of_sold_books}")  #.split()
-            # print(q)
-            Library.transactions_bought.append(q) 
+            book.sold_quantity +=1
+            # Library.transactions_bought.append(f"{book.title} {book.author} {book.sold_quantity}")
 
-            # if len(Library.transactions_bought) == 0:
-            #     q = ' '.join(map(str,q))
-                # Library.transactions_bought.append(q) 
-            # else:
-            #     for list in Library.transactions_bought:
-            #         if list[0] == book.title:
-            #             Reader.quantity_of_sold_books += 1
-            #             print(Reader.quantity_of_sold_books)
-            #         else:
-            #             # q = ' '.join(map(str,q))
-            #             Library.transactions_bought.append(q) 
-
+            # Library.transactions_bought[self.name][book] += book.sold_quantity 
+            
+            if self.name in Library.transactions_bought.keys():
+                if book in Library.transactions_bought[self.name]:
+                    Library.transactions_bought[self.name][book] = book.sold_quantity
+                else:
+                    Library.transactions_bought[self.name].update({book: book.sold_quantity})
+            else:
+                Library.transactions_bought.update({self.name: {book: book.sold_quantity}})
 
 class Library:
 
@@ -146,8 +140,7 @@ class Library:
         for transaction in self.transactions_borrow:
             print(transaction)
         print('\nTransactions_bought:')
-        for transaction in self.transactions_bought:
-            print(transaction)
+        print(Library.transactions_bought)
         print("\nIncome from sold books: ", Reader.price_total_from_sell)
         return ''
 
@@ -171,7 +164,7 @@ class Library:
     books_borrow, books_buy = parseLine()
     readers_list = []
     transactions_borrow = []
-    transactions_bought = []
+    transactions_bought = {}
 
     @classmethod
     def parseInput(cls):
@@ -185,7 +178,7 @@ class Library:
                     break
         elif operation == '==':
             for book in cls.books_buy:
-                if line[4] == book.title and line[5] == book.author and not book.reader_pesel:
+                if line[4] == book.title and line[5] == book.author:
                     reader == book
                     break
         elif operation == '-':
