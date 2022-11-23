@@ -148,7 +148,7 @@ class Library:
     def parseLine():
         book_borrow_list = []
         book_bought_book = []
-        with open("C:\\Users\\ASUS\\Desktop\\semestr3\\Programowanie_skryptowe\\Scrypts\\lab_5\\zadanie\\book.txt", "r") as lines:
+        with open("book.txt", "r") as lines:
             id = 1
             for line in lines:
                 book = line.rstrip().split(':')
@@ -197,6 +197,7 @@ if __name__=='__main__':
     except(EOFError):
         print(Library())
 
+# Adam Kasielski 123 == Harry_Potter Rowling
 # Adam Kasielski 123 == Harry_Potter Rowling
 # Adam Kasielski 123 == Ludzie_bezdomni Zeromski
 # Bartuś Fober 223 + Iliada Homer
