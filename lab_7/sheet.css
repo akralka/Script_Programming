@@ -1,0 +1,48 @@
+.azure {
+    background-color: rgb(189, 223, 211);
+    border: black solid 2px;
+    padding: 10px;  /* rozszerza komórki*/
+}
+
+body {
+  background-color: white;
+}
+
+aside  {
+    position: absolute;
+    right: 15px;
+    top: 70px;
+    width: 510px;
+    color: black;
+    
+}
+header{
+    margin-top: 10px;
+    color: black; 
+}
+
+footer {
+    margin-top: 4px;
+}
+
+main {
+    color: black;
+    margin-top: 10px;
+    width: 450px; 
+}
+nav {
+    color: black; 
+    width: 110px;
+    margin-top: 15px;
+    
+}
+blockquote {
+    font-family: 'Rockwell Condensed';
+    margin-left: 0;
+    margin-right: 0;
+}
+h1, h2{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
