@@ -1,4 +1,4 @@
-# python -c 'from collections import Counter;import sys,re;res = dict(Counter((map(lambda i:len(i), (re.findall(f"\\w+", sys.stdin.read()))))));print(res)'
+# python3 -c 'from collections import Counter;import sys,re;res = dict(Counter((map(lambda i:len(i), (re.findall(f"\\w+", sys.stdin.read()))))));print(res)'
 
 # dla czytelnosci
 from collections import Counter
