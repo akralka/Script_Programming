@@ -2,47 +2,75 @@
     background-color: rgb(189, 223, 211);
     border: black solid 2px;
     padding: 10px;  /* rozszerza komórki*/
+    font-size: 1.5vw;
+    margin-left: 0.4vw;
 }
 
 body {
-  background-color: white;
+    background-color: white;
 }
 
-aside  {
-    position: absolute;
-    right: 15px;
-    top: 70px;
-    width: 510px;
-    color: black;
-    
-}
 header{
     margin-top: 10px;
-    color: black; 
+}
+
+aside h1 {
+    animation: changeBlueToRedToBlue 4s infinite;
 }
 
 footer {
     margin-top: 4px;
 }
 
-main {
-    color: black;
-    margin-top: 10px;
-    width: 450px; 
-}
-nav {
-    color: black; 
-    width: 110px;
-    margin-top: 15px;
-    
-}
 blockquote {
     font-family: 'Rockwell Condensed';
     margin-left: 0;
     margin-right: 0;
+    font-size: 1.8vw;
 }
+
 h1, h2{
     margin-top: 0;
     margin-bottom: 0;
 }
 
+main {
+    margin-top: 10px;
+}
+
+nav {
+    margin-top: 10px;    
+}
+
+@media screen and (min-width: 7.6in) {
+    aside {
+        width: 48vw;
+        margin-top: 10px;
+        display: inline-block;
+        position: absolute;
+        right: 0px;
+        margin-right: 7px;
+    }
+    
+    main {
+        width: 50vw; 
+    }
+    
+    nav {
+        width: 13vw;
+        display: inline-block;
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 7.6in) {
+    aside {
+        margin-top: 10px; 
+    }
+}
+
+@keyframes changeBlueToRedToBlue {
+    0%   {color:red;}
+    50% {color: blue;}
+    100% {color:red;}
+}
