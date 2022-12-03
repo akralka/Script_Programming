@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+    href="https://www.w3schools.com/w3css/4/w3.css"><!-- Icons -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <title>
+        Biblioteka
+    </title>
+</head>
+
+<!-- Navigation (Sits on top) -->
+<div class="w3-dropdown-click">
+    <button class="w3-button" onclick="myFunction()">
+      Książki <i class="fa fa-caret-down"></i>
+    </button>
+    <div id="demo" class="w3-dropdown-content w3-bar-block w3-card">
+      <a href="#" class="w3-bar-item w3-button">Do wypożyczenia</a>
+      <a href="#" class="w3-bar-item w3-button">Do kupienia</a>
+    </div>
+  </div>
+  <script>
+    function myFunction() {
+      var x = document.getElementById("demo");
+      if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+      } else { 
+        x.className = x.className.replace(" w3-show", "");
+      }
+    }
+    </script>
+    <div class="w3-right w3-hide-small">
+        <style>
+            input {
+                position: relative;
+                top: 0.7vw;
+            }        
+    </style>
+        <form action="https://www.google.pl/search" method="get">
+            <input type="text" name="q">
+            <input type="hidden" name="ie" value="utf-8">
+            <input type="hidden" name="lr" value="lang_pl">
+            <input type="submit" value="Szukaj" style="width:23%"  >
+            </form>
+    </div>
+
+
+<div id="home" class="w3-content">
+    
+    <!-- About -->
+    <div id="home" class="w3-content">
+        <style>
+            img {
+                position: relative;
+                /* animation: example 4s 3; */
+                left: auto;
+            }
+            h1 {
+                margin-top: 2vw;
+            }
+
+        </style>
+           <div id="members" class="w3-container w3-padding-32">
+
+            <h1>Akademia Górniczo-Hutnicza</h1>
+            
+            <div class="w3-row">
+              <div class="w3-third">
+                <img src="img_try.jpeg" alt="Name1" style="width:95%">
+              </div>
+              <div class="w3-third">
+                <img src="img_try.jpeg" alt="Name2" style="width:95%">
+              </div>
+              <div class="w3-third">
+                <img src="img_try.jpeg" alt="Name3" style="width:95%">
+              </div>
+            </div>
+
+    </body>
+    <style>
+        
+        @keyframes example {
+            0%   {width: 95%;}
+            50%  {width: 65%;}
+            100% {width: 95%;}
+        }
+    </style>
+    </html>
