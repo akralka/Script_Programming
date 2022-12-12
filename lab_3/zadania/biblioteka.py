@@ -122,4 +122,4 @@ if __name__=='__main__':
 
 # python ./biblioteka.py "book.txt"
 # borrow Faust 2 Andy
-# book_return Faust 1 Andy
+# book_return Faust 1 Andyy
