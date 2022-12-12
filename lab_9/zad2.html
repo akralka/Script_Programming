@@ -1,0 +1,25 @@
+<input id="counter" type="number"><br><br>
+
+<span>0</span><br>
+<span>0</span><br>
+<span>0</span><br>
+
+<script>
+    var input = document.getElementById("counter"); //input#counter
+   
+    input.value = 10;
+
+    let num_update = function() {  
+        let i = input.value; 
+        if (i <= 0 || isNaN(i))  //wykluczamy puste
+            return ;
+
+        input.value = --i;
+        Array.from(document.getElementsByTagName("span")).forEach(element => { //[span, ...] tablica ze spanem, 3 bo <span>
+            element.textContent = i; // zmienia wartosc spanów
+        }); 
+    }
+   setInterval(num_update, 1000); // setInterval(fn, delay)
+    //This method returns an interval ID which uniquely identifies the interval
+    //calls the function (with a delay every time) until it is canceled
+</script>
