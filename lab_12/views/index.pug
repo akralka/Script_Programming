@@ -1,0 +1,284 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        title
+            | Form
+        script.
+            /****************************************************************************/
+            /* Function that performs (asynchronous) query to the web server using AJAX */
+            /****************************************************************************/
+            function requestAJAX() {
+
+                //-----------------------------------------------
+                // Create an object representing the request to the web server — see https://developer.mozilla.org/docs/Web/API/XMLHttpRequest
+                //-----------------------------------------------
+                const xhr = new XMLHttpRequest();  // object that allows you to make HTTP requests to a server without reloading the page.
+
+                // If the request was successful
+                xhr.addEventListener("load", function (evt) {
+                    if (xhr.status === 200) {
+                        window.alert(xhr.response);
+                        console.log(xhr.response);
+                    }
+                });
+
+                // If the request failed
+                xhr.addEventListener("error", function (evt) {
+                    window.alert('There was a problem with this request.');
+                });
+
+                //--------------------------------------------------------------------------
+                // Configuration and execution of the (asynchronous) query to the web server
+                //--------------------------------------------------------------------------
+
+                //****************************************************************
+                // Type of data received by the 'load' observer - default - 'text'
+                //****************************************************************
+
+                xhr.responseType ='json';
+
+                xhr.open('GET', '/submit', true);
+
+                //****************************************************************************************
+                // What is the acceptable data type - the server part should return data of the given type
+                // Default value: '*/*'
+                //****************************************************************************************
+                xhr.setRequestHeader('Accept', 'application/json');
+
+                xhr.send(null);
+            }
+
+            function requestAJAXwithName() { 
+
+                //-----------------------------------------------
+                // Create an object representing the request to the web server — see https://developer.mozilla.org/docs/Web/API/XMLHttpRequest
+                //-----------------------------------------------
+                const xhr = new XMLHttpRequest(); 
+
+                let name = encodeURIComponent(document.getElementById('withName').elements["imie_ajax_get"].value) //document.getelement Znajduje element z takim id
+                if (name == "") { name = "World"} // element ma wiele pól, nas obchodzi .value - czyli to co jest tam wpisane
+
+                // If the request was successful
+                xhr.addEventListener("load", function (evt) {
+                    
+                    if (xhr.status === 200) {
+                        window.alert(xhr.response.welcome);
+                        console.log(xhr.response);
+                    }
+                });
+
+                // If the request failed
+                xhr.addEventListener("error", function (evt) {
+                    window.alert('There was a problem with this request.');
+                });
+
+                //--------------------------------------------------------------------------
+                // Configuration and execution of the (asynchronous) query to the web server
+                //--------------------------------------------------------------------------
+
+                //****************************************************************
+                // Type of data received by the 'load' observer - default - 'text'
+                //****************************************************************
+
+                xhr.responseType ='json';
+
+                xhr.open('GET', `/submit?imie=${name}`, true);
+
+                //****************************************************************************************
+                // What is the acceptable data type - the server part should return data of the given type
+                // Default value: '*/*'
+                //****************************************************************************************
+                xhr.setRequestHeader('Accept', 'application/json');
+
+                xhr.send(null);
+            }
+            
+            function requestAJAXwithNamePOST() {
+
+                //-----------------------------------------------
+                // Create an object representing the request to the web server — see https://developer.mozilla.org/docs/Web/API/XMLHttpRequest
+                //-----------------------------------------------
+                const xhr = new XMLHttpRequest(); 
+
+                let name = encodeURIComponent(document.getElementById('withName').elements["imie_ajax_post"].value)
+                if (name == "") { name = "World"}
+
+                // If the request was successful
+                xhr.addEventListener("load", function (evt) {
+                    
+                    if (xhr.status === 200) {
+                        window.alert(xhr.response.welcome);
+                        console.log(xhr.response);
+                    }
+                });
+
+                // If the request failed
+                xhr.addEventListener("error", function (evt) {
+                    window.alert('There was a problem with this request.');
+                });
+
+                //--------------------------------------------------------------------------
+                // Configuration and execution of the (asynchronous) query to the web server
+                //--------------------------------------------------------------------------
+
+                //****************************************************************
+                // Type of data received by the 'load' observer - default - 'text'
+
+                xhr.responseType ='json';
+
+                xhr.open('POST', `/submit`, true);
+
+                //****************************************************************************************
+                // What is the acceptable data type - the server part should return data of the given type
+                // Default value: '*/*'
+                //****************************************************************************************
+                xhr.setRequestHeader('Accept', 'application/json');
+                xhr.setRequestHeader('Content-Type' ,'application/x-www-form-urlencoded');
+                xhr.send(`imie=${name}`)
+                //- JSON - {"imie": "asdasd"}
+                //- FormUrlEncoded - "imie=asdasdasd"
+            }
+            
+            /*********************************************************************************/
+            /* Function that performs (asynchronous) query to the web server using Fetch API */
+            /*********************************************************************************/
+            function requestFetchAPI() {
+                fetch('/submit', {
+                    headers: {
+                        //****************************************************************************************
+                        // What is the acceptable data type - the server part should return data of the given type
+                        // Default value: '*/*'
+                        //****************************************************************************************
+                        'Accept': 'application/json'
+                    },
+                }) // Execution of the (asynchronous) query to the web server — a promise is created
+                .then(function (response) { // if the promise is fulfilled
+                    if (!response.ok)
+                        throw Error(response.statusText);
+                    if (!response.headers.get('content-type')?.includes('application/json')) {
+                        // If the received data is plain text or an XML document
+                        const result = response.text();
+                        window.alert(result); // show the Promise object
+                        console.log(result);
+                    }
+                    else {
+                        //If the received data is a JSON document
+                        response.json().then((result) => {  // tutaj6 // const result = response.json();
+                            window.alert(result.welcome); // show the Promise object (no welcome)
+                            console.log(result.welcome);
+                        }); 
+                        //- response.text().then((result) => {
+                        //-     window.alert(result); // show the Promise object
+                        //-     console.log(JSON.parse(result));
+                        //- }); 
+                    }
+                })
+                .catch(function (error) { // if the promise is rejected
+                    window.alert(error);
+                });
+            }
+
+           function requestFetchWithName() {
+                let name = encodeURIComponent(document.getElementById('withName').elements["imie_fetch_get"].value) 
+                if (name == "") { name = "World"} // element ma wiele pól, nas obchodzi .value
+
+                fetch(`/submit?imie=${name}`, {
+                    headers: {
+                        //****************************************************************************************
+                        // What is the acceptable data type - the server part should return data of the given type
+                        // Default value: '*/*'
+                        //****************************************************************************************
+                        'Accept': 'application/json'
+                    },
+                }) // Execution of the (asynchronous) query to the web server — a promise is created
+                .then(function (response) { // if the promise is fulfilled
+                    if (!response.ok)
+                        throw Error(response.statusText);
+                    if (!response.headers.get('content-type')?.includes('application/json')) {
+                        // If the received data is plain text or an XML document
+                        const result = response.text();
+                        window.alert(result); // show the Promise object
+                        console.log(result);
+                    }
+                    else {
+                        //If the received data is a JSON document
+                        response.json().then((result) => {  // tutaj6 // const result = response.json();
+                            window.alert(result.welcome); // show the Promise object (no welcome)
+                            console.log(result.welcome);
+                        }); 
+                        //- response.text().then((result) => {
+                        //-     window.alert(result); // show the Promise object
+                        //-     console.log(JSON.parse(result));
+                        //- }); 
+                    }
+                })
+                .catch(function (error) { // if the promise is rejected
+                    window.alert(error);
+                });
+            }
+
+         function requestFetchWithNamePOST() {
+                let name = encodeURIComponent(document.getElementById('withName').elements["imie_fetch_post"].value) 
+                if (name == "") { name = "World"} 
+
+                fetch(`/submit`, {
+                    headers: {
+                        //****************************************************************************************
+                        // What is the acceptable data type - the server part should return data of the given type
+                        // Default value: '*/*'
+                        //****************************************************************************************
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `imie=${name}`,
+                    method: "POST"
+                }) // Execution of the (asynchronous) query to the web server — a promise is created
+                .then(function (response) { // if the promise is fulfilled
+                    if (!response.ok)
+                        throw Error(response.statusText);
+                    if (!response.headers.get('content-type')?.includes('application/json')) {
+                        // If the received data is plain text or an XML document
+                        const result = response.text();
+                        window.alert(result); // show the Promise object
+                        console.log(result);
+                    }
+                    else {
+                        //If the received data is a JSON document
+                        response.json().then((result) => {  // tutaj6 // const result = response.json();
+                            window.alert(result.welcome); // show the Promise object (no welcome)
+                            console.log(result.welcome);
+                        }); 
+                        //- response.text().then((result) => {
+                        //-     window.alert(result); // show the Promise object
+                        //-     console.log(JSON.parse(result));
+                        //- }); 
+                    }
+                })
+                .catch(function (error) { // if the promise is rejected
+                    window.alert(error);
+                });
+            }
+
+    body
+        main
+            form(method='get' action='/submit')
+                label
+                    | Perform a query to the web server with the
+                    strong GET
+                    |  method
+                input(type='submit' value='Without using AJAX or Fetch API')
+                input(type='button' value='Using AJAX' onclick='requestAJAX()')
+                input(type='button' value='Using Fetch API' onclick='requestFetchAPI()')
+            form#withName() 
+                input#imie_ajax_get(type = 'text' placeholder='Wpisz imię')
+                input(type = 'button' value='GET (AJAX)' onclick='requestAJAXwithName()')
+                br
+                input#imie_ajax_post(type = 'text' placeholder='Wpisz imię')
+                input(type = 'button' value='POST (AJAX)' onclick='requestAJAXwithNamePOST()')
+                br
+                input#imie_fetch_get(type = 'text' placeholder='Wpisz imię')
+                input(type = 'button' value='GET (FETCH)' onclick='requestFetchWithName()')
+                br
+                input#imie_fetch_post(type = 'text' placeholder='Wpisz imię')
+                input(type = 'button' value='POST (FETCH)' onclick='requestFetchWithNamePOST()')
